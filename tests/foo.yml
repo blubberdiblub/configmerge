@@ -1,0 +1,17 @@
+---
+a: 123
+foobar:
+  nested: yay
+  # comment
+  dict: oh yeah
+  float_list: [1, 2, 3]
+  block_list:
+    - 1
+    - 2
+    - 3
+  another_float_list: ["abc", "def", "xyz"]
+  another_block_list:
+    - Das
+    - Lamm
+    - sagt
+    - hurz
