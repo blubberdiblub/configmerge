@@ -1,0 +1,13 @@
+{
+  "b": 456,
+  "foobar": {
+    "add_float_list": ["foo", 23, 5.03],
+    "add_block_list": [
+      "bar",
+      42,
+      -123.456
+    ],
+    "nested": "nay",
+    "foo": "or wait a minute"
+  }
+}
