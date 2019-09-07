@@ -124,25 +124,48 @@ def save_props(f, d: Mapping) -> None:
     jprops.store_properties(f, d)
 
 
+def merge(value1: Any, value2: Any) -> Any:
+
+    if value2 is None:
+        return value1
+
+    if value1 is None:
+        return value2
+
+    if isinstance(value1, Mapping):
+
+        if not isinstance(value1, MutableMapping):
+            raise TypeError("mapping must be mutable")
+
+        if not isinstance(value2, Mapping):
+            raise TypeError("can only merge another mapping into mapping")
+
+        merge_dict(value1, value2)
+        return value1
+
+    if isinstance(value1, Sequence):
+
+        if not isinstance(value1, MutableSequence):
+            raise TypeError("sequence must be mutable")
+
+        if not isinstance(value2, Sequence):
+            raise TypeError("can only merge another sequence into sequence")
+
+        merge_list(value1, value2)
+        return value1
+
+    return merge_simple(value1, value2)
+
+
 def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
 
-    for k, v in d2.items():
+    for key, value in d2.items():
 
-        if k not in d1:
-            d1[k] = v
+        if key not in d1:
+            d1[key] = value
             continue
 
-        existing = d1[k]
-
-        if isinstance(existing, MutableMapping) and isinstance(v, Mapping):
-            merge_dict(existing, v)
-            continue
-
-        if isinstance(existing, MutableSequence) and isinstance(v, Sequence):
-            merge_list(existing, v)
-            continue
-
-        d1[k] = merge_simple(existing, v)
+        d1[key] = merge(d1[key], value)
 
 
 def merge_list(l1: MutableSequence, l2: Sequence) -> None:
@@ -151,12 +174,6 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
 
 def merge_simple(value1: Any, value2: Any) -> Any:
-
-    if value2 is None:
-        return value1
-
-    if value1 is None:
-        return value2
 
     if isinstance(value1, bool) and isinstance(value2, bool):
         return value2
@@ -168,12 +185,6 @@ def merge_simple(value1: Any, value2: Any) -> Any:
         return value2
 
     if isinstance(value1, Text) and isinstance(value2, Text):
-        return value2
-
-    if isinstance(value1, Mapping) and isinstance(value2, Mapping):
-        return value2
-
-    if isinstance(value1, Sequence) and isinstance(value2, Sequence):
         return value2
 
     raise TypeError("unsupported type or type combination")
@@ -189,10 +200,12 @@ def main(destination, merge_files):
             d = load(f)
 
     except FileNotFoundError:
-        d = {}
+        d = None
 
     for merge_file in merge_files:
-        merge_dict(d, load(merge_file))
+
+        m = load(merge_file)
+        d = merge(d, m)
 
     with open(destination, mode='wb') as f:
         save(f, d)
