@@ -1,7 +1,10 @@
-FROM python:3.7-alpine
+FROM alpine:3.10
 LABEL maintainer=blubberdiblub@gmail.com
+RUN apk add --no-cache python3
+RUN python3 -m ensurepip --default-pip
+RUN pip3 install --no-cache --upgrade pip setuptools wheel
 WORKDIR /opt/configmerge
 COPY requirements.txt .
-RUN pip install -r requirements.txt && rm -rf ~/.cache
+RUN pip3 install --no-cache -r requirements.txt
 COPY configmerge.py bin/configmerge.py
-ENTRYPOINT ["python", "bin/configmerge.py"]
+ENTRYPOINT ["python3", "bin/configmerge.py"]
