@@ -170,7 +170,15 @@ def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
 
 def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
-    l1[:] = l2
+    member = set(l1)
+
+    for value in l2:
+
+        if value in member:
+            continue
+
+        l1.append(value)
+        member.add(value)
 
 
 def merge_simple(value1: Any, value2: Any) -> Any:
