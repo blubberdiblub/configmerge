@@ -7,4 +7,4 @@ WORKDIR /opt/configmerge
 COPY requirements.txt .
 RUN pip3 install --no-cache -r requirements.txt
 COPY configmerge.py bin/configmerge.py
-ENTRYPOINT ["python3", "bin/configmerge.py"]
+ENTRYPOINT ["/usr/bin/python3", "/opt/configmerge/bin/configmerge.py"]
