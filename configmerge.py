@@ -15,6 +15,8 @@ import pathlib
 
 from numbers import Integral, Real
 
+from frozendict import FrozenOrderedDict
+
 
 def load(f) -> MutableMapping:
 
@@ -168,17 +170,53 @@ def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
         d1[key] = merge(d1[key], value)
 
 
+def deep_freeze(obj: Any) -> Any:
+
+    if obj is None:
+        return obj
+
+    if isinstance(obj, bool):
+        return bool(obj)
+
+    if isinstance(obj, Integral):
+        return int(obj)
+
+    if isinstance(obj, Real):
+        return float(obj)
+
+    if isinstance(obj, Text):
+        return str(obj)
+
+    if isinstance(obj, Mapping):
+
+        if not isinstance(obj, MutableMapping):
+            return FrozenOrderedDict(obj)
+
+        return FrozenOrderedDict((deep_freeze(key), deep_freeze(value))
+                                 for key, value in obj.items())
+
+    if isinstance(obj, Sequence):
+
+        if not isinstance(obj, MutableSequence):
+            return tuple(obj)
+
+        return tuple(deep_freeze(item) for item in obj)
+
+    raise TypeError("unsupported type")
+
+
 def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
-    member = set(l1)
+    member = set(deep_freeze(item) for item in l1)
 
     for value in l2:
 
-        if value in member:
+        frozen = deep_freeze(value)
+        if frozen in member:
             continue
 
         l1.append(value)
-        member.add(value)
+        member.add(frozen)
 
 
 def merge_simple(value1: Any, value2: Any) -> Any:
