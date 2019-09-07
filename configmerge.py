@@ -143,7 +143,7 @@ def merge(value1: Any, value2: Any) -> Any:
         merge_dict(value1, value2)
         return value1
 
-    if isinstance(value1, Sequence):
+    if isinstance(value1, Sequence) and not isinstance(value1, Text):
 
         if not isinstance(value1, MutableSequence):
             raise TypeError("sequence must be mutable")
