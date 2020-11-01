@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.12
 LABEL maintainer=blubberdiblub@gmail.com
 RUN apk add --no-cache python3
 RUN python3 -m ensurepip --default-pip
