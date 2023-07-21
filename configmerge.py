@@ -241,7 +241,7 @@ def deep_freeze(obj: Any) -> Any:
         obj: The object to recursively freeze
 
     Returns:
-        The frozen immutable version
+        The frozen immutable version of the input object.
 
     """
 
