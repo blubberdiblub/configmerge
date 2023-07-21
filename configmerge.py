@@ -273,6 +273,32 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
 def merge_simple(value1: Any, value2: Any) -> Any:
 
+    """Merge two simple values: strings, numbers, booleans.
+
+    Raises TypeError if types differ or are unsupported.
+
+    If types match, value2 takes precedence.
+
+    Args:
+      value1: The first value to merge.
+      value2: The second value to merge.
+
+    Returns:
+      The merged value.
+
+    Raises:
+      TypeError: If types differ or are unsupported.
+
+    Examples:
+
+      >>> merge_simple('a', 'b')
+      'b'
+
+      >>> merge_simple(1, 2)
+      2
+
+    """
+
     if isinstance(value1, bool) and isinstance(value2, bool):
         return value2
 
