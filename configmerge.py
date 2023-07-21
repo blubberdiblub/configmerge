@@ -150,6 +150,36 @@ def save_props(f, d: Mapping) -> None:
 
 def merge(value1: Any, value2: Any) -> Any:
 
+    """Merge two configuration data structures recursively.
+
+    This handles merging of various types, e.g.:
+
+    - dictionaries (dict) and other mappings
+    - lists, tuples and other sequences
+    - strings, numbers, booleans, etc.
+
+    Complex objects like dictionaries are merged recursively.
+
+    Args:
+        value1: The first value to merge.
+        value2: The second value to merge.
+
+    Returns:
+        The merged configuration value.
+
+    Raises:
+        TypeError: If types cannot be merged.
+
+    Examples:
+
+        >>> merge({'a': 1}, {'b': 2})
+        {'a': 1, 'b': 2}
+
+        >>> merge([1, 2], [3, 4])
+        [1, 2, 3, 4]
+
+    """
+
     if value2 is None:
         return value1
 
