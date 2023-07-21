@@ -213,6 +213,28 @@ def merge(value1: Any, value2: Any) -> Any:
 
 def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
 
+    """Merge two mappings recursively.
+
+    Mutates d1 in-place to contain items from both mappings.
+    If keys match, recursively merges values.
+
+    Args:
+      d1: The mapping to merge into. Mutated in-place.
+      d2: The other mapping to merge from.
+
+    Returns:
+      None, mutates d1 in-place.
+
+    Examples:
+
+      >>> d1 = {'a': 1}
+      >>> d2 = {'b': 2}
+      >>> merge_dict(d1, d2)
+      >>> d1
+      {'a': 1, 'b': 2}
+
+    """
+
     for key, value in d2.items():
 
         if key not in d1:
@@ -279,6 +301,28 @@ def deep_freeze(obj: Any) -> Any:
 
 
 def merge_list(l1: MutableSequence, l2: Sequence) -> None:
+
+    """Merge two sequences, omitting duplicates coming from l2.
+
+    Deep freezes items from both inputs and
+    adds items from l2 to l1 if not already present.
+
+    Args:
+      l1: The first sequence. Mutated in-place.
+      l2: The second sequence.
+
+    Returns:
+      None, mutates l1 in-place.
+
+    Examples:
+
+      >>> l1 = [1, 2]
+      >>> l2 = [2, 3]
+      >>> merge_list(l1, l2)
+      >>> l1
+      [1, 2, 3]
+
+    """
 
     member = set(deep_freeze(item) for item in l1)
 
