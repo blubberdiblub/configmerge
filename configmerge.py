@@ -38,10 +38,12 @@ def load_yaml(f) -> MutableMapping:
 
     try:
 
+        # noinspection PyUnresolvedReferences
         from ruamel.yaml import YAML
 
     except ImportError:
 
+        # noinspection PyPackageRequirements
         import yaml
 
         kwargs = {
@@ -88,10 +90,12 @@ def save_yaml(f, d: Mapping) -> None:
 
     try:
 
+        # noinspection PyUnresolvedReferences
         from ruamel.yaml import YAML
 
     except ImportError:
 
+        # noinspection PyPackageRequirements
         import yaml
 
         class _IndentDumper(yaml.SafeDumper):
