@@ -1,6 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+This module provides the ability to merge multiple configuration files of
+different formats (JSON, YAML, properties) into a single configuration.
+
+The key functions are:
+
+- merge() - merges multiple configuration files into one config dict
+- merge_dict() - merge two dicts recursively
+- load() - depending on file extension, load YAML, JSON or Java properties
+- load_json(), load_yaml(), load_props() - load individual config files
+
+Example usage:
+
+merged_config = merge(["config1.json", "config2.yml"])
+
+"""
+
+
 from typing import (
     Any,
     Mapping,
