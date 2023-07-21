@@ -21,12 +21,15 @@ merged_config = merge(["config1.json", "config2.yml"])
 
 from typing import (
     Any,
+    BinaryIO,
     Mapping,
     MutableMapping,
     MutableSequence,
     Sequence,
     Text,
 )
+
+from os import PathLike
 
 import click
 import pathlib
@@ -36,7 +39,7 @@ from numbers import Integral, Real
 from frozendict import FrozenOrderedDict
 
 
-def load(f) -> MutableMapping:
+def load(f: BinaryIO) -> MutableMapping:
 
     p = pathlib.PurePath(f.name)
 
@@ -52,7 +55,7 @@ def load(f) -> MutableMapping:
     raise TypeError("unknown file type")
 
 
-def load_yaml(f) -> MutableMapping:
+def load_yaml(f: BinaryIO) -> MutableMapping:
 
     try:
 
@@ -76,19 +79,19 @@ def load_yaml(f) -> MutableMapping:
     return yaml.load(f, **kwargs)
 
 
-def load_json(f) -> MutableMapping:
+def load_json(f: BinaryIO) -> MutableMapping:
 
     import json
     return json.load(f)
 
 
-def load_props(f) -> MutableMapping:
+def load_props(f: BinaryIO) -> MutableMapping:
 
     import jprops
     return jprops.load_properties(f)
 
 
-def save(f, d: Mapping) -> None:
+def save(f: BinaryIO, d: Mapping) -> None:
 
     p = pathlib.PurePath(f.name)
 
@@ -104,7 +107,7 @@ def save(f, d: Mapping) -> None:
     raise TypeError("unknown file type")
 
 
-def save_yaml(f, d: Mapping) -> None:
+def save_yaml(f: BinaryIO, d: Mapping) -> None:
 
     try:
 
@@ -136,13 +139,13 @@ def save_yaml(f, d: Mapping) -> None:
     yaml.dump(d, f, **kwargs)
 
 
-def save_json(f, d: Mapping) -> None:
+def save_json(f: BinaryIO, d: Mapping) -> None:
 
     import json
     f.write(json.dumps(d, ensure_ascii=False, indent=2).encode('utf-8'))
 
 
-def save_props(f, d: Mapping) -> None:
+def save_props(f: BinaryIO, d: Mapping) -> None:
 
     import jprops
     jprops.store_properties(f, d)
@@ -382,7 +385,7 @@ def merge_simple(value1: Any, value2: Any) -> Any:
 @click.command()
 @click.argument('destination', type=click.Path(dir_okay=False, writable=True))
 @click.argument('merge-files', nargs=-1, type=click.File(mode='rb', lazy=True))
-def main(destination, merge_files):
+def main(destination: PathLike, merge_files: Sequence[BinaryIO]) -> None:
 
     try:
         with open(destination, mode='rb') as f:
@@ -401,4 +404,4 @@ def main(destination, merge_files):
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main())
