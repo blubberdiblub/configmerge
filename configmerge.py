@@ -305,7 +305,8 @@ def deep_freeze(obj: Any) -> Any:
 
 def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
-    """Merge two sequences, omitting duplicates coming from l2.
+    """
+    Merge two sequences, omitting duplicates coming from l2.
 
     Deep freezes items from both inputs and
     adds items from l2 to l1 if not already present.
@@ -341,29 +342,33 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
 def merge_simple(value1: Any, value2: Any) -> Any:
 
-    """Merge two simple values: strings, numbers, booleans.
+    """
+    Merge two simple values: strings, numbers, booleans.
 
-    Raises TypeError if types differ or are unsupported.
+    Parameters
+    ----------
+    value1 : Text, Real, Integral, bool
+        The first value to merge.
+    value2 : Text, Real, Integral, bool
+        The second value to merge.
 
-    If types match, value2 takes precedence.
+    Returns
+    -------
+    merged_value : str, float, int, bool
+        The merged value.
 
-    Args:
-      value1: The first value to merge.
-      value2: The second value to merge.
+    Raises
+    ------
+    TypeError
+        If types differ or are unsupported.
 
-    Returns:
-      The merged value.
+    Examples
+    --------
+    >>> merge_simple('a', 'b')
+    'b'
 
-    Raises:
-      TypeError: If types differ or are unsupported.
-
-    Examples:
-
-      >>> merge_simple('a', 'b')
-      'b'
-
-      >>> merge_simple(1, 2)
-      2
+    >>> merge_simple(1, 2)
+    2
 
     """
 
