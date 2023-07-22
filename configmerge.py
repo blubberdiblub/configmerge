@@ -9,17 +9,22 @@ The key functions are:
 
 - merge() : Merge multiple configuration files into one config dict.
 - merge_dict() : Merge two dicts recursively.
-- load() : Depending on file extension, load YAML, JSON or Java properties
+- load() : Depending on file extension, load YAML, JSON or Java properties.
 - load_json() : Load a JSON config file.
 - load_yaml() : Load a YAML config file.
 - load_props() : Load a Java properties config file.
 
-Example usage:
-
-merged_config = merge(["config1.json", "config2.yaml"])
+Examples
+--------
+>>> from pathlib import Path
+>>> with Path("config1.json").open('rb') as f1,
+...      Path("config2.properties").open('rb') as f2:
+...     dest = load(f1)
+...     merged = merge(dest, load(f2))
+>>> with Path("result.yaml").open('wb') as f:
+...     save(f, merged)
 
 """
-
 
 from typing import (
     Any,
