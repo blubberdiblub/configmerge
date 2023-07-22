@@ -211,6 +211,32 @@ def save_yaml(f: BinaryIO, d: Mapping) -> None:
 
 def save_json(f: BinaryIO, d: Mapping) -> None:
 
+    """
+    Save a mapping as JSON into a file.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file-like object to save the JSON data into.
+    d : Mapping
+        The mapping (such as a dict) containing the data to be saved as JSON.
+
+    Notes
+    -----
+    This function converts the mapping into a JSON string
+    and writes it into the file-like object, encoded as UTF-8.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+    >>> file_object = BytesIO()
+    >>> save_json(file_object, data)
+    >>> file_object.getvalue()
+    b'{\n  "key1": "value1",\n  "key2": "value2",\n  "key3": "value3"\n}'
+
+    """
+
     import json
     f.write(json.dumps(d, ensure_ascii=False, indent=2).encode('utf-8'))
 
