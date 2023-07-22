@@ -217,6 +217,27 @@ def save_json(f: BinaryIO, d: Mapping) -> None:
 
 def save_props(f: BinaryIO, d: Mapping) -> None:
 
+    """
+    Saves properties from a mapping into a file-like object.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file-like object to save the properties into.
+    d : Mapping
+        The mapping (such as a dict) containing the properties to be saved.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+    >>> file_object = BytesIO()
+    >>> save_props(file_object, data)
+    >>> file_object.getvalue()
+    b'key1=value1\nkey2=value2\nkey3=value3\n'
+
+    """
+
     import jprops
     jprops.store_properties(f, d)
 
