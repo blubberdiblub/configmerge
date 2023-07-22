@@ -64,6 +64,21 @@ def load(f: BinaryIO) -> MutableMapping:
 
 def load_yaml(f: BinaryIO) -> MutableMapping:
 
+    """
+    Load a YAML file into a dictionary.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file object to load.
+
+    Returns
+    -------
+    MutableMapping
+        A dictionary containing the loaded YAML data.
+
+    """
+
     try:
 
         # noinspection PyUnresolvedReferences
