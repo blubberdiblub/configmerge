@@ -308,23 +308,28 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
     """
     Merge two sequences, omitting duplicates coming from l2.
 
-    Deep freezes items from both inputs and
-    adds items from l2 to l1 if not already present.
+    Deep freezes items from both inputs
+    and adds items from l2 to l1 if not already present.
 
-    Args:
-      l1: The first sequence. Mutated in-place.
-      l2: The second sequence.
+    Parameters
+    ----------
+    l1 : MutableSequence
+        The first sequence. Mutated in-place.
+    l2 : Sequence
+        The second sequence.
 
-    Returns:
-      None, mutates l1 in-place.
+    Returns
+    -------
+    None
+        Mutates l1 in-place.
 
-    Examples:
-
-      >>> l1 = [1, 2]
-      >>> l2 = [2, 3]
-      >>> merge_list(l1, l2)
-      >>> l1
-      [1, 2, 3]
+    Examples
+    --------
+    >>> l1 = [1, 2, 1]
+    >>> l2 = [3, 4, 1, 5]
+    >>> merge_list(l1, l2)
+    >>> l1
+    [1, 2, 1, 3, 4, 5]
 
     """
 
