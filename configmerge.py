@@ -179,6 +179,38 @@ def save(f: BinaryIO, d: Mapping) -> None:
 
 def save_yaml(f: BinaryIO, d: Mapping) -> None:
 
+    """
+    Saves a YAML representation of the given mapping into a file-like object.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file-like object to save the YAML representation into.
+    d : Mapping
+        The mapping (such as a dict) containing the data to be saved.
+
+    Raises
+    ------
+    ImportError
+        If the required YAML library (ruamel.yaml or yaml) is not installed.
+
+    Notes
+    -----
+    This function first tries to import ruamel.yaml. If it fails, it falls back
+    to using the PyYAML. The YAML representation is rendered with visually
+    more pleasing indentation even if only PyYAML is available.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+    >>> file_object = BytesIO()
+    >>> save_yaml(file_object, data)
+    >>> file_object.getvalue()
+    b'key1: value1\nkey2: value2\nkey3: value3\n'
+
+    """
+
     try:
 
         # noinspection PyUnresolvedReferences
