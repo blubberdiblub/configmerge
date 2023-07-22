@@ -249,7 +249,8 @@ def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
 
 def deep_freeze(obj: Any) -> Any:
 
-    """Recursively freeze a data structure to be immutable.
+    """
+    Recursively freeze a data structure to be immutable.
 
     Traverses the structure and converts mutable types like mappings
     and sequences to immutable versions to avoid mutation issues.
@@ -262,10 +263,14 @@ def deep_freeze(obj: Any) -> Any:
     Other mutable types may also be converted to immutable
     equivalents where applicable.
 
-    Args:
-        obj: The object to recursively freeze
+    Parameters
+    ----------
+    obj : Any
+        The object to recursively freeze.
 
-    Returns:
+    Returns
+    -------
+    Any
         The frozen immutable version of the input object.
 
     """
