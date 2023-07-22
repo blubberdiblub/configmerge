@@ -103,9 +103,32 @@ def load_yaml(f: BinaryIO) -> MutableMapping:
 
 def load_json(f: BinaryIO) -> MutableMapping:
 
+    """
+    Loads a JSON file and returns its content as a mutable mapping.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file object to load.
+
+    Returns
+    -------
+    MutableMapping
+        A mutable mapping (usually a dict)
+        representing the content of the JSON file.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = b'{"name": "John", "age": 30}'
+    >>> file_object = BytesIO(data)
+    >>> load_json(file_object)
+    {'name': 'John', 'age': 30}
+
+    """
+
     import json
     return json.load(f)
-
 
 def load_props(f: BinaryIO) -> MutableMapping:
 
