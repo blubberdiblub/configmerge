@@ -153,7 +153,8 @@ def save_props(f: BinaryIO, d: Mapping) -> None:
 
 def merge(value1: Any, value2: Any) -> Any:
 
-    """Merge two configuration data structures recursively.
+    """
+    Merge two configuration data structures recursively.
 
     This handles merging of various types, e.g.:
 
@@ -163,23 +164,30 @@ def merge(value1: Any, value2: Any) -> Any:
 
     Complex objects like dictionaries are merged recursively.
 
-    Args:
-        value1: The first value to merge.
-        value2: The second value to merge.
+    Parameters
+    ----------
+    value1 : Any
+        The first value to merge.
+    value2 : Any
+        The second value to merge.
 
-    Returns:
+    Returns
+    -------
+    Any
         The merged configuration value.
 
-    Raises:
-        TypeError: If types cannot be merged.
+    Raises
+    ------
+    TypeError
+        If types cannot be merged.
 
-    Examples:
+    Examples
+    --------
+    >>> merge({'a': 1}, {'b': 2})
+    {'a': 1, 'b': 2}
 
-        >>> merge({'a': 1}, {'b': 2})
-        {'a': 1, 'b': 2}
-
-        >>> merge([1, 2], [3, 4])
-        [1, 2, 3, 4]
+    >>> merge([1, 2], [3, 4])
+    [1, 2, 3, 4]
 
     """
 
