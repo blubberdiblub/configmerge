@@ -109,7 +109,7 @@ def load_json(f: BinaryIO) -> MutableMapping:
     Parameters
     ----------
     f : BinaryIO
-        The file object to load.
+        The file to load a JSON object from.
 
     Returns
     -------
@@ -130,7 +130,32 @@ def load_json(f: BinaryIO) -> MutableMapping:
     import json
     return json.load(f)
 
+
 def load_props(f: BinaryIO) -> MutableMapping:
+
+    """
+    Loads a Java properties file
+    and returns its key-value pairs as a mutable mapping.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file to load properties from.
+
+    Returns
+    -------
+    MutableMapping
+        A mutable mapping (usually a dict) representing the loaded properties.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = b'key1=value1\nkey2=value2\nkey3=value3'
+    >>> file_object = BytesIO(data)
+    >>> load_props(file_object)
+    {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}
+
+    """
 
     import jprops
     return jprops.load_properties(f)
