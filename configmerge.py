@@ -216,26 +216,26 @@ def merge(value1: Any, value2: Any) -> Any:
 
 def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
 
-    """Merge two mappings recursively.
+    """
+    Merge two mappings recursively.
 
     Mutates d1 in-place to contain items from both mappings.
     If keys match, recursively merges values.
 
-    Args:
-      d1: The mapping to merge into. Mutated in-place.
-      d2: The other mapping to merge from.
+    Parameters
+    ----------
+    d1 : MutableMapping
+        The mapping to merge into, mutated in-place.
+    d2 : Mapping
+        The other mapping to merge from.
 
-    Returns:
-      None, mutates d1 in-place.
-
-    Examples:
-
-      >>> d1 = {'a': 1}
-      >>> d2 = {'b': 2}
-      >>> merge_dict(d1, d2)
-      >>> d1
-      {'a': 1, 'b': 2}
-
+    Examples
+    --------
+    >>> d1 = {'a': 1, 'b': 2}
+    >>> d2 = {'b': 3, 'c': 4}
+    >>> merge_dict(d1, d2)
+    >>> d1
+    {'a': 1, 'b': 3, 'c': 4}
     """
 
     for key, value in d2.items():
