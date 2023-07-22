@@ -2,19 +2,21 @@
 # -*- coding: utf-8 -*-
 
 """
-This module provides the ability to merge multiple configuration files of
+Provides the ability to merge multiple configuration files of
 different formats (JSON, YAML, properties) into a single configuration.
 
 The key functions are:
 
-- merge() - merges multiple configuration files into one config dict
-- merge_dict() - merge two dicts recursively
-- load() - depending on file extension, load YAML, JSON or Java properties
-- load_json(), load_yaml(), load_props() - load individual config files
+- merge() : Merge multiple configuration files into one config dict.
+- merge_dict() : Merge two dicts recursively.
+- load() : Depending on file extension, load YAML, JSON or Java properties
+- load_json() : Load a JSON config file.
+- load_yaml() : Load a YAML config file.
+- load_props() : Load a Java properties config file.
 
 Example usage:
 
-merged_config = merge(["config1.json", "config2.yml"])
+merged_config = merge(["config1.json", "config2.yaml"])
 
 """
 
