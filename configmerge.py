@@ -417,6 +417,37 @@ def merge_simple(value1: Any, value2: Any) -> Any:
 @click.argument('merge-files', nargs=-1, type=click.File(mode='rb', lazy=True))
 def main(destination: PathLike, merge_files: Sequence[BinaryIO]) -> None:
 
+    """
+    Entry point for the program.
+
+    Parameters
+    ----------
+    destination : PathLike
+        The path to the destination file where the merged data will be saved.
+    merge_files : Sequence[BinaryIO]
+        A sequence of files to be merged with the destination file.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    FileNotFoundError
+        If the destination file does not exist.
+
+    Notes
+    -----
+    The function loads the data from the destination file
+    and merges it with the data from each merge file.
+    The merged data is then saved back to the destination file.
+
+    Example usage
+    -------------
+    $ python configmerge.py output.yaml file1.yaml file2.yaml
+
+    """
+
     try:
         with open(destination, mode='rb') as f:
             d = load(f)
