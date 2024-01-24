@@ -1,5 +1,13 @@
-/.gitignore
-/.idea/
-/LICENSE
+Makefile
+requirements.txt
+
+.git
+.gitattributes
+.gitignore
+
+.fleet/
+.idea/
+.vscode/
+
 /tests/
 /venv/
