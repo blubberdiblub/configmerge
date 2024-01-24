@@ -1,4 +1,4 @@
-click
-frozendict
-jprops
-ruamel.yaml
+click~=8.1.7
+frozendict~=2.4.0
+jprops~=2.0.2
+ruamel.yaml~=0.18.5
