@@ -1,0 +1,18 @@
+DOCKER_IMAGE_USER := blubberdiblub
+DOCKER_IMAGE_NAME := configmerge
+DOCKER_IMAGE_REPO := $(DOCKER_IMAGE_USER)/$(DOCKER_IMAGE_NAME)
+DOCKER_IMAGE_TAG := latest
+DOCKER_IMAGE := $(DOCKER_IMAGE_REPO):$(DOCKER_IMAGE_TAG)
+
+DOCKERFILE := Dockerfile
+REQUIREMENTS_FILE := requirements.txt
+REQUIREMENTS := $(shell cat '$(REQUIREMENTS_FILE)')
+SOURCE_PATH := src
+
+DOCKER := docker
+BUILD_COMMAND := $(DOCKER) build
+BUILD_OPTIONS := --force-rm
+
+.PHONY: build
+build:
+	$(BUILD_COMMAND) $(BUILD_OPTIONS) -f '$(DOCKERFILE)' --build-arg=requirements='$(REQUIREMENTS)' -t '$(DOCKER_IMAGE)' '$(SOURCE_PATH)'
