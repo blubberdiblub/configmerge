@@ -77,6 +77,14 @@ def load_yaml(f: BinaryIO) -> MutableMapping:
     MutableMapping
         A dictionary containing the loaded YAML data.
 
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = b'{"name": "John", "age": 30}'
+    >>> file_object = BytesIO(data)
+    >>> load_yaml(file_object)
+    {'name': 'John', 'age': 30}
+
     """
 
     try:
