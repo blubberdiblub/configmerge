@@ -27,10 +27,9 @@ Examples
 
 """
 
-import pathlib
-
 from collections.abc import Mapping, MutableMapping, MutableSequence, Sequence
 from numbers import Integral, Real
+from pathlib import PurePath
 from shutil import get_terminal_size
 
 import click
@@ -84,7 +83,7 @@ def load(f: BinaryIO) -> MutableMapping[Hashable, object]:
 
     """
 
-    p = pathlib.PurePath(f.name)
+    p = PurePath(f.name)
 
     if p.suffix.casefold() in ['.yml', '.yaml']:
         return load_yaml(f)
@@ -228,7 +227,7 @@ def save(f: BinaryIO, d: Mapping[Hashable, object]) -> None:
 
     """
 
-    p = pathlib.PurePath(f.name)
+    p = PurePath(f.name)
 
     if p.suffix.casefold() in ['.yml', '.yaml']:
         return save_yaml(f, d)
