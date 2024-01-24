@@ -31,6 +31,7 @@ import pathlib
 
 from collections.abc import Mapping, MutableMapping, MutableSequence, Sequence
 from numbers import Integral, Real
+from shutil import get_terminal_size
 
 import click
 
@@ -41,6 +42,8 @@ if TYPE_CHECKING:
     from collections.abc import Hashable
     from os import PathLike
     from typing import BinaryIO
+
+TERMINAL_WIDTH = get_terminal_size().columns or 80
 
 
 def load(f: BinaryIO) -> MutableMapping[Hashable, object]:
@@ -619,7 +622,8 @@ def merge_simple(value1: object, value2: object) -> object:
 @click.command()
 @click.argument('destination', type=click.Path(dir_okay=False, writable=True))
 @click.argument('merge-files', nargs=-1, type=click.File(mode='rb', lazy=True))
-def main(destination: PathLike[str], merge_files: Sequence[BinaryIO]) -> None:
+def main(destination: PathLike[str], merge_files: Sequence[BinaryIO],
+         max_content_width: int = TERMINAL_WIDTH) -> None:
 
     """
     Merge multiple configuration files into a single file.
