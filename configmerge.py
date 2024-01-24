@@ -207,6 +207,27 @@ def load_props(f: BinaryIO) -> MutableMapping:
 
 def save(f: BinaryIO, d: Mapping) -> None:
 
+    """
+    Saves the given mapping `d` to the file `f`.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file to save the mapping to.
+    d : Mapping
+        The mapping to be saved.
+
+    Raises
+    ------
+    TypeError
+        If the file type is unknown.
+
+    Returns
+    -------
+    None
+
+    """
+
     p = pathlib.PurePath(f.name)
 
     if p.suffix.casefold() in ['.yml', '.yaml']:
