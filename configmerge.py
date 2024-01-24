@@ -48,6 +48,42 @@ from frozendict import FrozenOrderedDict
 
 def load(f: BinaryIO) -> MutableMapping:
 
+    """
+    Load a structured data from a YAML, JSON or properties file.
+
+    Parameters
+    ----------
+    f : BinaryIO
+        The file-like object to load the data from.
+
+    Returns
+    -------
+    MutableMapping
+        A mutable mapping (usually a dict) representing the loaded data.
+
+    Examples
+    --------
+    >>> from io import BytesIO
+    >>> data = b'name: John\nage: 30\n---\n'
+    >>> _my_file = BytesIO(data)
+    >>> _my_file.name = 'file.yml'
+    >>> load(_my_file)
+    {'name': 'John', 'age': 30}
+
+    >>> data = b'{"name": "John", "age": 30}'
+    >>> _my_file = BytesIO(data)
+    >>> _my_file.name = 'file.json'
+    >>> load(_my_file)
+    {'name': 'John', 'age': 30}
+
+    >>> data = b'name=John\nage=30\n'
+    >>> _my_file = BytesIO(data)
+    >>> _my_file.name = 'file.properties'
+    >>> load(_my_file)
+    {'name': 'John', 'age': '30'}
+
+    """
+
     p = pathlib.PurePath(f.name)
 
     if p.suffix.casefold() in ['.yml', '.yaml']:
