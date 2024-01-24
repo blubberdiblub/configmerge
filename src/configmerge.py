@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
+from __future__ import annotations as _annotations
 
 """
 Provides the ability to merge multiple configuration files of
@@ -26,27 +27,23 @@ Examples
 
 """
 
-from typing import (
-    Any,
-    BinaryIO,
-    Mapping,
-    MutableMapping,
-    MutableSequence,
-    Sequence,
-    Text,
-)
-
-from os import PathLike
-
-import click
 import pathlib
 
+from collections.abc import Mapping, MutableMapping, MutableSequence, Sequence
 from numbers import Integral, Real
+
+import click
 
 from frozendict import FrozenOrderedDict
 
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from collections.abc import Hashable
+    from os import PathLike
+    from typing import BinaryIO
 
-def load(f: BinaryIO) -> MutableMapping:
+
+def load(f: BinaryIO) -> MutableMapping[Hashable, object]:
 
     """
     Load a structured data from a YAML, JSON or properties file.
@@ -98,7 +95,7 @@ def load(f: BinaryIO) -> MutableMapping:
     raise TypeError("unknown file type")
 
 
-def load_yaml(f: BinaryIO) -> MutableMapping:
+def load_yaml(f: BinaryIO) -> MutableMapping[Hashable, object]:
 
     """
     Load a YAML file into a dictionary.
@@ -145,7 +142,7 @@ def load_yaml(f: BinaryIO) -> MutableMapping:
     return yaml.load(f, **kwargs)
 
 
-def load_json(f: BinaryIO) -> MutableMapping:
+def load_json(f: BinaryIO) -> MutableMapping[Hashable, object]:
 
     """
     Loads a JSON file and returns its content as a mutable mapping.
@@ -175,7 +172,7 @@ def load_json(f: BinaryIO) -> MutableMapping:
     return json.load(f)
 
 
-def load_props(f: BinaryIO) -> MutableMapping:
+def load_props(f: BinaryIO) -> MutableMapping[Hashable, object]:
 
     """
     Loads a Java properties file
@@ -205,7 +202,7 @@ def load_props(f: BinaryIO) -> MutableMapping:
     return jprops.load_properties(f)
 
 
-def save(f: BinaryIO, d: Mapping) -> None:
+def save(f: BinaryIO, d: Mapping[Hashable, object]) -> None:
 
     """
     Saves the given mapping `d` to the file `f`.
@@ -242,7 +239,7 @@ def save(f: BinaryIO, d: Mapping) -> None:
     raise TypeError("unknown file type")
 
 
-def save_yaml(f: BinaryIO, d: Mapping) -> None:
+def save_yaml(f: BinaryIO, d: Mapping[Hashable, object]) -> None:
 
     """
     Saves a YAML representation of the given mapping into a file-like object.
@@ -288,7 +285,7 @@ def save_yaml(f: BinaryIO, d: Mapping) -> None:
 
         class _IndentDumper(yaml.SafeDumper):
 
-            def increase_indent(self, flow=False, indentless=False):
+            def increase_indent(self, flow: bool = False, indentless: bool = False):
 
                 return super().increase_indent(flow, False)
 
@@ -306,7 +303,7 @@ def save_yaml(f: BinaryIO, d: Mapping) -> None:
     yaml.dump(d, f, **kwargs)
 
 
-def save_json(f: BinaryIO, d: Mapping) -> None:
+def save_json(f: BinaryIO, d: Mapping[Hashable, object]) -> None:
 
     """
     Save a mapping as JSON into a file.
@@ -338,7 +335,7 @@ def save_json(f: BinaryIO, d: Mapping) -> None:
     f.write(json.dumps(d, ensure_ascii=False, indent=2).encode('utf-8'))
 
 
-def save_props(f: BinaryIO, d: Mapping) -> None:
+def save_props(f: BinaryIO, d: Mapping[Hashable, object]) -> None:
 
     """
     Saves properties from a mapping into a file-like object.
@@ -365,7 +362,7 @@ def save_props(f: BinaryIO, d: Mapping) -> None:
     jprops.store_properties(f, d)
 
 
-def merge(value1: Any, value2: Any) -> Any:
+def merge(value1: object, value2: object) -> object:
 
     """
     Merge two configuration data structures recursively.
@@ -380,14 +377,14 @@ def merge(value1: Any, value2: Any) -> Any:
 
     Parameters
     ----------
-    value1 : Any
+    value1 : object
         The first value to merge.
-    value2 : Any
+    value2 : object
         The second value to merge.
 
     Returns
     -------
-    Any
+    object
         The merged configuration value.
 
     Raises
@@ -422,7 +419,7 @@ def merge(value1: Any, value2: Any) -> Any:
         merge_dict(value1, value2)
         return value1
 
-    if isinstance(value1, Sequence) and not isinstance(value1, Text):
+    if isinstance(value1, Sequence) and not isinstance(value1, str):
 
         if not isinstance(value1, MutableSequence):
             raise TypeError("sequence must be mutable")
@@ -436,7 +433,7 @@ def merge(value1: Any, value2: Any) -> Any:
     return merge_simple(value1, value2)
 
 
-def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
+def merge_dict(d1: MutableMapping[Hashable, object], d2: Mapping[Hashable, object]) -> None:
 
     """
     Merge two mappings recursively.
@@ -469,7 +466,7 @@ def merge_dict(d1: MutableMapping, d2: Mapping) -> None:
         d1[key] = merge(d1[key], value)
 
 
-def deep_freeze(obj: Any) -> Any:
+def deep_freeze(obj: object) -> object:
 
     """
     Recursively freeze a data structure to be immutable.
@@ -487,12 +484,12 @@ def deep_freeze(obj: Any) -> Any:
 
     Parameters
     ----------
-    obj : Any
+    obj : object
         The object to recursively freeze.
 
     Returns
     -------
-    Any
+    object
         The frozen immutable version of the input object.
 
     """
@@ -509,7 +506,7 @@ def deep_freeze(obj: Any) -> Any:
     if isinstance(obj, Real):
         return float(obj)
 
-    if isinstance(obj, Text):
+    if isinstance(obj, str):
         return str(obj)
 
     if isinstance(obj, Mapping):
@@ -530,7 +527,7 @@ def deep_freeze(obj: Any) -> Any:
     raise TypeError("unsupported type")
 
 
-def merge_list(l1: MutableSequence, l2: Sequence) -> None:
+def merge_list(l1: MutableSequence[object], l2: Sequence[object]) -> None:
 
     """
     Merge two sequences, omitting duplicates coming from l2.
@@ -560,7 +557,7 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
 
     """
 
-    member = set(deep_freeze(item) for item in l1)
+    member = {deep_freeze(item) for item in l1}
 
     for value in l2:
 
@@ -572,16 +569,16 @@ def merge_list(l1: MutableSequence, l2: Sequence) -> None:
         member.add(frozen)
 
 
-def merge_simple(value1: Any, value2: Any) -> Any:
+def merge_simple(value1: object, value2: object) -> object:
 
     """
     Merge two simple values: strings, numbers, booleans.
 
     Parameters
     ----------
-    value1 : Text, Real, Integral, bool
+    value1 : str, Real, Integral, bool
         The first value to merge.
-    value2 : Text, Real, Integral, bool
+    value2 : str, Real, Integral, bool
         The second value to merge.
 
     Returns
@@ -613,7 +610,7 @@ def merge_simple(value1: Any, value2: Any) -> Any:
     if isinstance(value1, Real) and isinstance(value2, Real):
         return value2
 
-    if isinstance(value1, Text) and isinstance(value2, Text):
+    if isinstance(value1, str) and isinstance(value2, str):
         return value2
 
     raise TypeError("unsupported type or type combination")
