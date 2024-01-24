@@ -622,14 +622,14 @@ def merge_simple(value1: Any, value2: Any) -> Any:
 @click.command()
 @click.argument('destination', type=click.Path(dir_okay=False, writable=True))
 @click.argument('merge-files', nargs=-1, type=click.File(mode='rb', lazy=True))
-def main(destination: PathLike, merge_files: Sequence[BinaryIO]) -> None:
+def main(destination: PathLike[str], merge_files: Sequence[BinaryIO]) -> None:
 
     """
     Entry point for the program.
 
     Parameters
     ----------
-    destination : PathLike
+    destination : PathLike[str]
         The path to the destination file where the merged data will be saved.
     merge_files : Sequence[BinaryIO]
         A sequence of files to be merged with the destination file.
