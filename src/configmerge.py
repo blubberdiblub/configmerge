@@ -622,34 +622,27 @@ def merge_simple(value1: object, value2: object) -> object:
 def main(destination: PathLike[str], merge_files: Sequence[BinaryIO]) -> None:
 
     """
-    Entry point for the program.
+    Merge multiple configuration files into a single file.
 
-    Parameters
-    ----------
-    destination : PathLike[str]
+    This command reads data from one or more source files, merges it with the
+    data from a destination file, and saves the result back to the destination
+    file. The source files can be in YAML, JSON, or Java properties format.
+
+    \b
+    DESTINATION
         The path to the destination file where the merged data will be saved.
-    merge_files : Sequence[BinaryIO]
-        A sequence of files to be merged with the destination file.
 
-    Returns
-    -------
-    None
+    \b
+    MERGE_FILES
+        Any number of files to be read and merged with the destination file.
 
-    Raises
-    ------
-    FileNotFoundError
-        If the destination file does not exist.
+    Example:
 
-    Notes
-    -----
-    The function loads the data from the destination file
-    and merges it with the data from each merge file.
-    The merged data is then saved back to the destination file.
+    \b
+    $ configmerge.py output.yaml file1.yaml file2.yaml
 
-    Example usage
-    -------------
-    $ python configmerge.py output.yaml file1.yaml file2.yaml
-
+    In this example, the command merges the data from file1.yaml and file2.yaml
+    with the data from output.yaml and saves the result back to output.yaml.
     """
 
     try:
