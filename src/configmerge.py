@@ -34,7 +34,7 @@ from shutil import get_terminal_size
 
 import click
 
-from frozendict import FrozenOrderedDict
+from immutabledict import ImmutableOrderedDict
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -478,7 +478,7 @@ def deep_freeze(obj: object) -> object:
 
     Supported conversions:
 
-    - Mappings (e.g. dict) -> FrozenOrderedDict
+    - Mappings (e.g. dict) -> ImmutableOrderedDict
     - Sequences (e.g. list) -> tuple
 
     Other mutable types may also be converted to immutable
@@ -514,10 +514,10 @@ def deep_freeze(obj: object) -> object:
     if isinstance(obj, Mapping):
 
         if not isinstance(obj, MutableMapping):
-            return FrozenOrderedDict(obj)
+            return ImmutableOrderedDict(obj)
 
-        return FrozenOrderedDict((deep_freeze(key), deep_freeze(value))
-                                 for key, value in obj.items())
+        return ImmutableOrderedDict((deep_freeze(key), deep_freeze(value))
+                                    for key, value in obj.items())
 
     if isinstance(obj, Sequence):
 
