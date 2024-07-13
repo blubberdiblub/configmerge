@@ -2,3 +2,4 @@ click~=8.1.7
 immutabledict~=4.1.0
 jprops~=2.0.2
 ruamel.yaml~=0.18.5
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
