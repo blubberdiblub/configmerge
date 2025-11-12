@@ -1,4 +1,4 @@
-ARG alpine_version=3.16.8
+ARG alpine_version=3.22.2
 FROM alpine:${alpine_version}
 RUN apk add --no-cache python3
 RUN python3 -m ensurepip --default-pip
