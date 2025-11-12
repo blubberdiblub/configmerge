@@ -6,7 +6,7 @@ DOCKER_IMAGE := $(DOCKER_IMAGE_REPO):$(DOCKER_IMAGE_TAG)
 
 DOCKERFILE := Dockerfile
 REQUIREMENTS_FILE := requirements.txt
-REQUIREMENTS := $(shell cat '$(REQUIREMENTS_FILE)')
+REQUIREMENTS := $(shell sed -e 's/\s*#.*$$//' -- '$(REQUIREMENTS_FILE)')
 SOURCE_PATH := src
 
 DOCKER := docker
